@@ -1,0 +1,53 @@
+<script>
+    // データ部分のみ定義
+    let order = [
+        {dish: "唐揚げ", num: 10},
+        {dish: "唐揚げ", num: 8},
+        {dish: "唐揚げ", num: 6},
+    ]
+
+    // 表示関数
+    let show = function(d) {
+        document.write(d.dish + d.num + "個" + "<br>\n");
+    };
+
+    // 中身を全て表示
+    let showAll = function(data) {
+        data.forEach(show);
+    };
+
+    // つまみ食いする弁当を決定する
+    // 今回は唐揚げが最も多い弁当を見つける
+    let selectEatingBento = function(data) {
+        return(data.reduce((a, b) => a.num < b.num ? b : a));
+    }
+    // 選んだ弁当の唐揚げを一つ食べる
+    // 弁当配列をmapでコピー、唐揚げ数が最大の弁当に対してはnum-1を設定
+    let eatingKaraage = function(data) {
+        return (
+            data.map(function(d,i,arr) {
+                if(d === selectEatingBento(arr)) {
+                    return ({dish:d.dish, num:d.num-1});
+                } else {
+                    return (d);
+                }
+            })
+        );
+    }
+
+    // メイン処理
+    // num:あと何個食べるか
+    // data:全弁当データ
+    let eating = function(num, data) {
+        // 表示
+        document.write("----------" + "<br>\n");
+        showAll(data);
+        // まだ食べる場合、再帰で呼び出し
+        if(0 < num) {
+            eating(num-1, eatingKaraage(data));
+        }
+    };
+
+    // 実行
+    eating(5, order);
+</script>

@@ -1,0 +1,48 @@
+<script>
+    (function() {
+        window.onload = function() {
+            // クラスの定義
+            // 弁当クラス
+            let Bento = function(dish, num) {
+                // おかず名
+                this.dish = dish;
+                // 何個入っているか
+                this.num = num;
+            };
+            // 中身の表示関数
+            Bento.prototype.show = function() {
+                document.write(this.dish + this.num + "個" + "<br>\n");
+            };
+    
+            // データの準備
+            // 弁当を３個作るとする
+            let karaben1 = new Bento("唐揚げ", 10);
+            let karaben2 = new Bento("唐揚げ", 8);
+            let karaben3 = new Bento("唐揚げ", 6);
+    
+            // 全お弁当配列
+            let order = [karaben1, karaben2, karaben3];
+    
+            // つまみ食い実施
+            // つまみ食いする数
+            let eat = 5;
+    
+            // eat回繰り返す
+            for(let loop = 0; loop < eat; loop++) {
+                // 唐揚げが最大個数の弁当を探す
+                let maxBento = 0;
+                for(let i = 0; i < order.length; i++) {
+                    maxBento = order[maxBento].num < order[i].num ? i : maxBento;
+                }
+                // 一個食べる
+                order[maxBento].num--;
+    
+                // 表示
+                document.write("----------" + "<br>\n");
+                for(let i = 0; i < order.length; i++) {
+                    order[i].show();
+                }
+            }
+        }
+    }());
+</script>
